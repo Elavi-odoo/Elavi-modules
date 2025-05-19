@@ -3,8 +3,8 @@ import werkzeug
 from odoo import http, _
 from odoo.http import request, route, url_encode
 from odoo.addons.website_sale.controllers.main import WebsiteSale
-from werkzeug.utils import redirect
 from odoo.addons.website_event.controllers.main import WebsiteEventController
+from werkzeug.utils import redirect
 import logging
 
 from odoo.odoo.exceptions import UserError
@@ -16,7 +16,6 @@ class WebsiteSaleInherit(WebsiteSale):
 
     @http.route(['/shop/address'], type='http', methods=['GET', 'POST'], auth="public", website=True, sitemap=False)
     def address(self, **kw):
-        print("address child")
         if request.httprequest.method == "POST" and 'submitted' in kw:
             email = kw.get('email')
             if email:
