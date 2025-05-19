@@ -1,5 +1,5 @@
 {
-    'name': 'event registration block email',
+    'name': 'event registration unique email',
     'version': '17.0',
     'depends': ['base', 'website_sale'],
     'data': [
