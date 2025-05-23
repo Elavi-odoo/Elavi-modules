@@ -34,10 +34,13 @@ $(document).ready(function() {
             return;
         }
 
-        //add blok sumbit immediately when checking starts - only for valid emails
+        // Add block submit immediately when checking starts - only for valid emails
         const submitButton = $('.js_submit_button');
         const form = submitButton.closest('form');
         console.log("submitButton", submitButton);
+
+        // Store if this check was triggered by a submit attempt
+        const isSubmitTriggered = sessionStorage.getItem('emailCheckTriggeredBySubmit') === 'true';
 
         // Block submission while checking valid email
         if (submitButton.length > 0 && email) {
@@ -46,6 +49,16 @@ $(document).ready(function() {
                 e.preventDefault();
                 e.stopPropagation();
                 console.log("Form submission blocked - checking email");
+
+                // Mark that submit was attempted during email check
+                sessionStorage.setItem('emailCheckTriggeredBySubmit', 'true');
+
+                // Trigger email check if not already in progress
+                if (!emailField.classList.contains('checking-email')) {
+                    emailField.classList.add('checking-email');
+                    checkEmailFallback({currentTarget: emailField});
+                }
+
                 return false;
             });
         }
@@ -76,18 +89,32 @@ $(document).ready(function() {
                 showPortalMessageFallback(emailField, true);
                 hideSubmitButtonFallback('This email already has a portal account.');
                 // Keep the form blocked - don't remove the submit.emailcheck handler
-                sessionStorage.clear();
+                sessionStorage.removeItem('emailCheckTriggeredBySubmit');
             } else {
                 console.log('✅ FALLBACK: Email does NOT have account - UNBLOCKING SUBMIT');
                 // Unblock the form since email is available
                 form.off('submit.emailcheck');
 
+                // If this check was triggered by a submit attempt, submit the form now
+                if (isSubmitTriggered) {
+                    console.log('🚀 Auto-submitting form after email validation');
+                    sessionStorage.removeItem('emailCheckTriggeredBySubmit');
+
+                    // Small delay to ensure DOM is ready
+                    setTimeout(() => {
+                        form[0].submit(); // Use native submit to avoid triggering our handler
+                    }, 100);
+                }
             }
 
         } catch (error) {
             console.error('❌ FALLBACK: Error:', error);
             showPortalMessageFallback(emailField, null, 'Error checking email');
             hideSubmitButtonFallback('Email validation failed');
+            sessionStorage.removeItem('emailCheckTriggeredBySubmit');
+        } finally {
+            // Remove checking state
+            emailField.classList.remove('checking-email');
         }
     }
 
