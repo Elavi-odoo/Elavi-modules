@@ -15,8 +15,6 @@ $(document).ready(function() {
         if (e.key === 'Enter' || e.keyCode === 13) {
             e.preventDefault();
             e.stopPropagation();
-//            checkEmailFallback(e);
-            console.log('⛔️ Enter key press blocked on input field');
             return false;
         }
     });
