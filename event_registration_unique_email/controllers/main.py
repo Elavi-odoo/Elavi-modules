@@ -90,27 +90,5 @@ class WebsiteEventController(WebsiteEventController):
                             'redirect': '/event'
                         })
                         return redirect(f"/web/login?{params}")
-        else:
-            _logger.info(f"User is logged in: {request.env.user.name} ({request.env.user.email})")
-            print("User is logged in :")
-            registrations_data = self._process_attendees_form(event, post)
-            for registration in registrations_data:
-                email_user_connected = request.env.user.email
-                email = registration.get('email')
-                if email != email_user_connected:
-                    existing_partner = request.env['res.partner'].sudo().search([
-                        ('email', '=', email),
-                        ('user_ids', '!=', False),
-                        ('user_ids.active', '=', True)
-                    ], limit=1)
-                    if existing_partner:
-                        # Pass all the original values plus the error message
-                        values = {
-                            'event': event,
-                            'tickets': post.get('tickets', []),  # Use the tickets from the POST data
-                            'availability_check': True,
-                            'error_message': "The email you entered is already associated with an account. Please log in."
-                        }
-                        return request.render('website_event.registration_attendee_details', values)
 
         return super().registration_confirm(event, **post)

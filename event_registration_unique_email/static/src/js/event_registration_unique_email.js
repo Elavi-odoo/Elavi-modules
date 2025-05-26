@@ -3,17 +3,23 @@
 import publicWidget from '@web/legacy/js/public/public_widget';
 
 
-//the first starting function
-// Fallback implementation with the same hide/show logic
+
 $(document).ready(function() {
-    console.log('📄 Document ready - Adding fallback email check');
 
     $(document).on('blur', 'input[type="email"], .event_attendee_email_field', function(e) {
-        console.log('📧 FALLBACK: Email blur event detected');
         checkEmailFallback(e);
     });
 
-
+    // Block Enter key from submitting the form
+    $(document).on('keydown', 'form input', function (e) {
+        if (e.key === 'Enter' || e.keyCode === 13) {
+            e.preventDefault();
+            e.stopPropagation();
+//            checkEmailFallback(e);
+            console.log('⛔️ Enter key press blocked on input field');
+            return false;
+        }
+    });
 
     async function checkEmailFallback(ev) {
         const email = ev.currentTarget.value.trim();
@@ -25,7 +31,7 @@ $(document).ready(function() {
 
         if (!email || !isValidEmailFallback(email)) {
             if (email && !isValidEmailFallback(email)) {
-                showPortalMessageFallback(emailField, null, 'Please enter a valid email address doc');
+                showPortalMessageFallback(emailField, null, 'Please enter a valid email address ');
             }
             // Don't block submit for invalid/empty emails
             const submitButton = $('.js_submit_button');
@@ -44,11 +50,9 @@ $(document).ready(function() {
 
         // Block submission while checking valid email
         if (submitButton.length > 0 && email) {
-            console.log("Blocking submit while checking email");
             form.off('submit.emailcheck').on('submit.emailcheck', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
-                console.log("Form submission blocked - checking email");
 
                 // Mark that submit was attempted during email check
                 sessionStorage.setItem('emailCheckTriggeredBySubmit', 'true');
@@ -62,8 +66,6 @@ $(document).ready(function() {
                 return false;
             });
         }
-
-        //showLoadingMessageFallback(emailField);
 
         try {
             const response = await fetch('/event/check_email_portal', {
@@ -82,59 +84,42 @@ $(document).ready(function() {
 
             const data = await response.json();
             const result = data.result || {};
-            console.log("result.has_account", result.has_account);
 
             if (result.has_account) {
-                console.log('✅ FALLBACK: Email HAS account - KEEPING SUBMIT BLOCKED');
                 showPortalMessageFallback(emailField, true);
                 hideSubmitButtonFallback('This email already has a portal account.');
                 // Keep the form blocked - don't remove the submit.emailcheck handler
                 sessionStorage.removeItem('emailCheckTriggeredBySubmit');
             } else {
-                console.log('✅ FALLBACK: Email does NOT have account - UNBLOCKING SUBMIT');
                 // Unblock the form since email is available
                 form.off('submit.emailcheck');
 
                 // If this check was triggered by a submit attempt, submit the form now
                 if (isSubmitTriggered) {
-                    console.log('🚀 Auto-submitting form after email validation');
                     sessionStorage.removeItem('emailCheckTriggeredBySubmit');
 
                     // Small delay to ensure DOM is ready
                     setTimeout(() => {
-                        form[0].submit(); // Use native submit to avoid triggering our handler
+                        form[0].submit();
                     }, 100);
                 }
             }
 
         } catch (error) {
-            console.error('❌ FALLBACK: Error:', error);
             showPortalMessageFallback(emailField, null, 'Error checking email');
             hideSubmitButtonFallback('Email validation failed');
             sessionStorage.removeItem('emailCheckTriggeredBySubmit');
         } finally {
-            // Remove checking state
             emailField.classList.remove('checking-email');
         }
     }
 
     function hideSubmitButtonFallback(message) {
-        console.log('🚫 FALLBACK: Hiding submit button');
-
         const submitButton = $('.js_submit_button');
         const form = submitButton.closest('form');
 
         if (submitButton.length > 0) {
             submitButton.hide().prop('disabled', true);
-
-            // Avoid adding duplicate messages
-//            if (!form.find('.submit-blocked-message').length) {
-//                submitButton.after(`
-//                    <div class="submit-blocked-message alert alert-danger mt-2">
-//                        <strong><i class="fa fa-ban"></i> Registration Blocked:</strong> ${message}
-//                    </div>
-//                `);
-//            }
 
             form.off('submit.emailcheck').on('submit.emailcheck', function(e) {
                 e.preventDefault();
@@ -142,13 +127,10 @@ $(document).ready(function() {
                 alert('Registration is not allowed for this email address.');
                 return false;
             });
-        } else {
-            console.log('⚠️ Submit button not found.');
         }
     }
 
     function showSubmitButtonFallback() {
-        console.log('✅ FALLBACK: Showing submit button');
 
         const form = $('form').first();
         const submitButton = form.find('button[type="submit"], input[type="submit"]');
@@ -164,15 +146,6 @@ $(document).ready(function() {
     // Helper functions
     function isValidEmailFallback(email) {
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-    }
-
-    function showLoadingMessageFallback(element) {
-        clearPortalMessageFallback(element);
-        $(element).after(`
-            <div class="portal-message text-muted small mt-1">
-                <i class="fa fa-spinner fa-spin"></i> Checking email...
-            </div>
-        `);
     }
 
     function showPortalMessageFallback(element, hasAccount, errorMessage = null) {
