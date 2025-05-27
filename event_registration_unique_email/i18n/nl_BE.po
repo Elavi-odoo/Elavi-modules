@@ -46,7 +46,8 @@ msgstr ""
 msgid ""
 "The email you entered is already associated with an account. Please log in."
 msgstr ""
-"Het e-mailadres dat je hebt ingevoerd is al gekoppeld aan een account. Log alsjeblieft in.."
+"Het e-mailadres dat je hebt ingevoerd is al gekoppeld aan een account. Log "
+"alsjeblieft in.."
 
 #. module: event_registration_unique_email
 #: model:ir.model.fields,help:event_registration_unique_email.field_res_company__event_checkout_unique_email

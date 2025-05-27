@@ -48,7 +48,8 @@ class WebsiteSaleInherit(WebsiteSale):
                         message = _("The email you entered is already associated with an account. Please log in.")
                         params = url_encode({
                             'message': message,
-                            'redirect': '/event'
+                            'redirect': '/event',
+                            'login': email
 
                         })
                         return redirect(f"/web/login?{params}")
@@ -165,7 +166,8 @@ class WebsiteEventController(WebsiteEventController):
                             message = _("The email you entered is already associated with an account. Please log in.")
                             params = url_encode({
                                 'message': message,
-                                'redirect': '/event'
+                                'redirect': '/event',
+                                'login': email
                             })
                             return redirect(f"/web/login?{params}")
 

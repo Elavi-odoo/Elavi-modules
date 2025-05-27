@@ -85,7 +85,7 @@ $(document).ready(function() {
 
             if (result.has_account) {
                 showPortalMessageFallback(emailField, true);
-                hideSubmitButtonFallback('This email already has a portal account.');
+                hideSubmitButtonFallback('This this email already has a portal account.');
                 // Keep the form blocked - don't remove the submit.emailcheck handler
                 sessionStorage.removeItem('emailCheckTriggeredBySubmit');
             } else {
@@ -154,7 +154,7 @@ $(document).ready(function() {
             message = `<i class="fa fa-exclamation-triangle"></i> ${errorMessage}`;
             alertClass = 'alert alert-danger';
         } else if (hasAccount) {
-//            message = `<i class="fa fa-ban"></i>` + `_t(This email already has a portal account!)`;
+//            message = `<i class="fa fa-ban"></i>`+ _t("This email already has a portal account!");
               message = `<i class="fa fa-ban"></i> Dit e-mailadres heeft al een portaalaccount.!`;
             alertClass = 'alert alert-warning';
         } else {
