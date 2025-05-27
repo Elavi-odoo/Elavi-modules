@@ -154,8 +154,8 @@ $(document).ready(function() {
             message = `<i class="fa fa-exclamation-triangle"></i> ${errorMessage}`;
             alertClass = 'alert alert-danger';
         } else if (hasAccount) {
-//            message = `<i class="fa fa-ban"></i> _t(This email already has a portal account!)`;
-              message = `<i class="fa fa-ban"></i> Dit e-mailadres heeft al een portaalaccount.!`;
+            message = `<i class="fa fa-ban"></i>` + `_t(This email already has a portal account!)`;
+//              message = `<i class="fa fa-ban"></i> Dit e-mailadres heeft al een portaalaccount.!`;
             alertClass = 'alert alert-warning';
         } else {
             message = `<i class="fa fa-check-circle"></i> Email is available for registration.`;
