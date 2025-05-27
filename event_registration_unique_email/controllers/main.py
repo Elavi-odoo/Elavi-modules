@@ -34,9 +34,10 @@ class WebsiteSaleInherit(WebsiteSale):
         # return super().address(**kw)
         # Check if the unique email validation is enabled
         company = request.env.company
-        if company.event_checkout_unique_email == True:
+        if company.event_checkout_unique_email and request.env.user._is_public():
             if request.httprequest.method == "POST" and 'submitted' in kw:
                 email = kw.get('email')
+
                 if email:
                     existing_user = request.env['res.users'].sudo().search([
                         ('partner_id.email', '=', email),
@@ -44,11 +45,11 @@ class WebsiteSaleInherit(WebsiteSale):
                     ], limit=1)
 
                     if existing_user:
-                        message = "Het e-mailadres dat je hebt ingevoerd is al gekoppeld aan een account. Log alsjeblieft in."
+                        message = _("The email you entered is already associated with an account. Please log in.")
                         params = url_encode({
                             'message': message,
-                            # 'redirect': '/event'
-                            'redirect': '/shop/checkout'
+                            'redirect': '/event'
+
                         })
                         return redirect(f"/web/login?{params}")
 
@@ -161,7 +162,7 @@ class WebsiteEventController(WebsiteEventController):
                             ('user_ids.active', '=', True)
                         ], limit=1)
                         if existing_partner:
-                            message = "Het e-mailadres dat je hebt ingevoerd is al gekoppeld aan een account. Log alsjeblieft in."
+                            message = _("The email you entered is already associated with an account. Please log in.")
                             params = url_encode({
                                 'message': message,
                                 'redirect': '/event'
