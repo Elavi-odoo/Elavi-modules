@@ -7,7 +7,6 @@
         <!--               position="attributes">-->
         <xpath expr="//input"
                position="attributes">
-
             <attribute name="t-attf-class"
                        add="#{('event_attendee_email_field' if question.question_type == 'email' else '')} form-control"
                        separator=" "/>

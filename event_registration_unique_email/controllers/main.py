@@ -44,10 +44,11 @@ class WebsiteSaleInherit(WebsiteSale):
                     ], limit=1)
 
                     if existing_user:
-                        message = "The email you entered is already associated with an account. Please log in."
+                        message = "Het e-mailadres dat je hebt ingevoerd is al gekoppeld aan een account. Log alsjeblieft in."
                         params = url_encode({
                             'message': message,
-                            'redirect': '/event'
+                            # 'redirect': '/event'
+                            'redirect': '/shop/checkout'
                         })
                         return redirect(f"/web/login?{params}")
 
@@ -160,7 +161,7 @@ class WebsiteEventController(WebsiteEventController):
                             ('user_ids.active', '=', True)
                         ], limit=1)
                         if existing_partner:
-                            message = "The email you entered is already associated with an account. Please log in."
+                            message = "Het e-mailadres dat je hebt ingevoerd is al gekoppeld aan een account. Log alsjeblieft in."
                             params = url_encode({
                                 'message': message,
                                 'redirect': '/event'
