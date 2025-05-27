@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<odoo>
+
+    <template id="registration_event_question_inherited" inherit_id="website_event.registration_event_question">
+        <xpath expr="//t[@t-if=&quot;question.question_type in ['name', 'email', 'phone', 'company_name']&quot;]/input"
+               position="attributes">
+            <attribute name="t-attf-class"
+                       add="#{('event_attendee_email_field' if question.question_type == 'email' else '')} form-control"
+                       separator=" "/>
+        </xpath>
+    </template>
+    <template id="registration_attendee_details_inherited" inherit_id="website_event.registration_attendee_details">
+        <xpath expr="//button[@type='submit' and contains(@class, 'btn-primary')]" position="attributes">
+            <attribute name="class">btn btn-primary js_submit_button</attribute>
+        </xpath>
+    </template>
+
+
+</odoo>

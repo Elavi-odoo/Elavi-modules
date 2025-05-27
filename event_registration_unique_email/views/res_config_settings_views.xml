@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_events" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.events</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="event.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//block[@name='registration_setting_container']" position="inside">
+                <setting string="Unique Email for Registration">
+                    <field name="event_registration_unique_email"/>
+                </setting>
+
+                <setting string="Unique Email for Checkout">
+                    <field name="event_checkout_unique_email"/>
+                </setting>
+            </xpath>
+        </field>
+    </record>
+</odoo>
