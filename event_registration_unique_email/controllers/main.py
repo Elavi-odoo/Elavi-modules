@@ -28,7 +28,6 @@ class WebsiteSaleInherit(WebsiteSale):
                     ], limit=1)
 
                     if existing_user:
-                        # Clear cart completely
                         order = request.website.sale_get_order(force_create=False)
                         if order:
                             order.sudo().unlink()
