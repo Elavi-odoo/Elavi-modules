@@ -28,12 +28,10 @@ class WebsiteSaleInherit(WebsiteSale):
                     ], limit=1)
 
                     if existing_user:
-                        # Clear cart completely
                         order = request.website.sale_get_order(force_create=False)
                         if order:
                             order.sudo().unlink()
 
-                        # Clear all cart-related session data
                         request.session.pop('sale_order_id', None)
                         request.session.pop('sale_last_order_id', None)
                         request.session.pop('website_sale_cart_quantity', None)
