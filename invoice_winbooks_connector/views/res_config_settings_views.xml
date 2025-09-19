@@ -12,12 +12,6 @@
                         <label for="enable_winbooks_integration" string="Enable WinBooks Integration"/>
                         <span class="fa fa-lg fa-building-o" title="Values set here are company-specific."/>
                     </div>
-
-                    <div invisible="not enable_winbooks_integration">
-                        <field name="winbooks_email" placeholder="Enter WinBooks email address"/>
-                        <label for="winbooks_email" string="WinBooks Email"/>
-                        <span class="fa fa-lg fa-building-o" title="Values set here are company-specific."/>
-                    </div>
                 </div>
             </widget>
         </field>

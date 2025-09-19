@@ -8,8 +8,5 @@ class ResConfigSettings(models.TransientModel):
         string="Enable WinBooks Integration",
         config_parameter="invoice_winbooks_connector.enable_winbooks_integration",
     )
-    winbooks_email = fields.Char(
-        string="WinBooks Email",
-        config_parameter="invoice_winbooks_connector.winbooks_email",
-    )
+
     
