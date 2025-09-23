@@ -5,15 +5,11 @@
         <field name="priority" eval="101"/>
         <field name="inherit_id" ref="snailmail_account.res_config_settings_view_form"/>
         <field name="arch" type="xml">
-            <widget name="iap_buy_more_credits" service_name="snailmail" position="after">
-                <div class="mt16">
-                    <div>
-                        <field name="enable_winbooks_integration"/>
-                        <label for="enable_winbooks_integration" string="Enable WinBooks Integration"/>
-                        <span class="fa fa-lg fa-building-o" title="Values set here are company-specific."/>
-                    </div>
-                </div>
-            </widget>
+            <xpath expr="//setting[@id='send_invoices_followups']" position="after">
+                <setting id="enable_winbooks_setting" help="Enable integration with WinBooks">
+                    <field name="enable_winbooks_integration"/>
+                </setting>
+            </xpath>
         </field>
     </record>
 </odoo>
