@@ -9,6 +9,5 @@
                 action = records.action_send_winbooks_email()
             </field>
         </record>
-
     </data>
 </odoo>

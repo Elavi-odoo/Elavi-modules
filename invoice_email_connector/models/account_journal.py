@@ -1,16 +1,12 @@
 import re
-
-from pip._internal.utils._jaraco_text import _
-
-from odoo import fields, models,api
-from odoo.odoo.exceptions import ValidationError
+from odoo import fields, models,api,_
+from odoo.exceptions import ValidationError
 
 
 class AccountJournal(models.Model):
     _inherit = "account.journal"
 
-    WinBooks_email = fields.Char(string="WinBooks Email")
-
+    WinBooks_email = fields.Char(string="Email")
     winbooks_integration_enabled = fields.Boolean(
         string="WinBooks Integration Enabled",
         compute="_compute_winbooks_integration_enabled"
@@ -18,13 +14,10 @@ class AccountJournal(models.Model):
 
     @api.constrains('WinBooks_email')
     def _check_winbooks_email(self):
-        """Validate email format"""
         for record in self:
             if record.WinBooks_email:
-                # Split by comma and clean whitespace
                 emails = [email.strip() for email in record.WinBooks_email.split(',')]
 
-                # Email regex pattern
                 email_pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
 
                 for email in emails:

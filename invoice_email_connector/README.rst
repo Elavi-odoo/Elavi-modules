@@ -1,5 +1,5 @@
 ==============
-Invoice Winbooks Connector
+Invoice Email Connector
 ==============
 
 .. 
@@ -30,35 +30,35 @@ Our module offers the solution by providing new fields, buttons, and extended fe
 Configuration
 =============
 
-A button **Send Email to WinBooks** is available.
-It can be configured by going to *Configuration > Settings* and enabling *Enable WinBooks Integration*.
+A button **Send Email ** is available.
+It can be configured by going to *Configuration > Settings* and enabling *Enable email Integration*.
 This allows you to add email addresses to journals.
 
-To send the email to a specific address, you must fill in the **WinBooks** field in the journal.
+To send the email to a specific address, you must fill in the **Email** field in the journal.
 
 
 Usage
 =====
 
-The concept of this module is to send emails directly to WinBooks.
-WinBooks expects to receive emails containing invoices, bills, and miscellaneous entries.
+The concept of this module is to send emails .
+Emails expects to receive emails containing invoices, bills, and miscellaneous entries.
 
-After configuring the journal and filling in the **WinBooks** email field,
+After configuring the journal and filling in the **Configure emails** email field,
 each flow can automatically send the corresponding documents by email:
 
 1. Invoice.
    Customers > Invoice
    Button "Send" opens a popup
-   Enable the field WinBooks
+   Enable the field Email
 
 2. **Bill**
    - Path: *Vendors > Bills*
-   - Action: Click the **Send to WinBooks** button.
+   - Action: Click the **Send to Email** button.
    - Behavior: The button is only visible if attachments exist.
 
 3. **Miscellaneous**
    - Path: *Accounting > Miscellaneous*
-   - Action: Click the **Send to WinBooks** button.
+   - Action: Click the **Send to Email** button.
    - Behavior: The button is only visible if attachments exist.
 
 

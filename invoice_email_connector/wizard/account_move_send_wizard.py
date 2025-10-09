@@ -1,24 +1,27 @@
-
 import base64
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError
 
-
 class AccountInvoiceSend(models.TransientModel):
     _inherit = 'account.invoice.send'
 
-    send_to_winbooks = fields.Boolean(string="Send to Email", default=False)
-
+    send_to_winbooks = fields.Boolean(string="Send to Multiple emails", default=False)
 
     def send_and_print_action(self):
         self.ensure_one()
+        integration_enabled = self.env['ir.config_parameter'].sudo().get_param(
+            'invoice_winbooks_connector.enable_winbooks_integration',
+            default=False
+        )
+        if not integration_enabled:
+            raise UserError(_("Email Integration is disabled in settings."))
 
         if self.send_to_winbooks:
             journal = self.invoice_ids[0].journal_id
             winbooks_email = getattr(journal, 'WinBooks_email', False)
 
             if not winbooks_email:
-                raise UserError(_("No WinBooks email configured on the journal."))
+                raise UserError(_("No email configured on the journal."))
 
             pdf_content = self.env['ir.actions.report']._render_qweb_pdf(
                 'account.account_invoices', self.invoice_ids.ids

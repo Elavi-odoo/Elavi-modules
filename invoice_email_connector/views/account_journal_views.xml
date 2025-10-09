@@ -5,7 +5,7 @@
         <field name="inherit_id" ref="account.view_account_journal_form"/>
         <field name="arch" type="xml">
             <xpath expr="//page[@name='advanced_settings']/group/group[@groups='account.group_account_manager']" position="after">
-                <group string="WinBooks" attrs="{'invisible': [('winbooks_integration_enabled', '=', False)]}">
+                <group string="Configure emails" attrs="{'invisible': [('winbooks_integration_enabled', '=', False)]}">
                     <field name="winbooks_integration_enabled" invisible="1"/>
                     <field name="WinBooks_email"/>
 

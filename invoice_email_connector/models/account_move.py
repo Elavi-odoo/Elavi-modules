@@ -1,12 +1,32 @@
-from odoo import models, _
+from odoo import models, _,fields
 from odoo.exceptions import UserError
 
 
 class AccountMove(models.Model):
     _inherit = "account.move"
 
+    has_invoice_attachments = fields.Boolean(
+        string='Has Invoice Attachments',
+        compute='_compute_has_invoice_attachments'
+    )
+
+    def _compute_has_invoice_attachments(self):
+        for move in self:
+            attachments = self.env['ir.attachment'].search_count([
+                ('res_model', '=', 'account.move'),
+                ('res_id', '=', move.id),
+            ])
+            move.has_invoice_attachments = attachments > 0
+
     def action_send_winbooks_email(self):
         global winbooks_email
+        integration_enabled = self.env['ir.config_parameter'].sudo().get_param(
+            'invoice_winbooks_connector.enable_winbooks_integration',
+            default=False
+        )
+        if not integration_enabled:
+            raise UserError(_("Email Integration is disabled in settings."))
+
         for move in self:
             journal = move.journal_id
             winbooks_email = journal.WinBooks_email

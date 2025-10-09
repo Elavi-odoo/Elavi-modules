@@ -1,26 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-
         <record id="view_account_invoice_send_form_inherit_winbooks" model="ir.ui.view">
             <field name="name">account.invoice.send.form.inherit.winbooks</field>
             <field name="model">account.invoice.send</field>
             <field name="inherit_id" ref="account.account_invoice_send_wizard_form"/>
             <field name="arch" type="xml">
-
                 <xpath expr="//div[@name='option_email']" position="after">
                     <div name="option_winbooks">
                         <field name="send_to_winbooks"/>
                         <b><label for="send_to_winbooks"/></b>
                         <div class="text-muted d-inline-block ms-2"
                              attrs="{'invisible': [('send_to_winbooks', '=', False)]}">
-                            Send a copy of this invoice to the configured  email
+                            Send a copy of this invoice to the configured  emails
                         </div>
                     </div>
                 </xpath>
-
             </field>
         </record>
-
     </data>
 </odoo>
