@@ -11,7 +11,7 @@ class AccountMove(models.Model):
             journal = move.journal_id
             winbooks_email = journal.WinBooks_email
             if not winbooks_email:
-                raise UserError(_("No WinBooks email configured on the journal %s.") % journal.display_name)
+                raise UserError(_("No email configured on the journal %s.") % journal.display_name)
 
         all_attachments = self.env['ir.attachment'].search([
             ('res_model', '=', 'account.move'),

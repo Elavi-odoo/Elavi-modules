@@ -1,0 +1,40 @@
+<!--<odoo>-->
+<!--    <record id="res_config_settings_view_form_inherit_winbooks" model="ir.ui.view">-->
+<!--        <field name="name">res.config.settings.view.form.inherit.winbooks</field>-->
+<!--        <field name="model">res.config.settings</field>-->
+<!--        <field name="priority" eval="101"/>-->
+<!--        <field name="inherit_id" ref="snailmail_account.res_config_settings_view_form"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <xpath expr="//setting[@id='send_invoices_followups']" position="after">-->
+<!--                <setting id="enable_winbooks_setting" help="Enable integration with WinBooks">-->
+<!--                    <field name="enable_winbooks_integration"/>-->
+<!--                </setting>-->
+<!--            </xpath>-->
+<!--        </field>-->
+<!--    </record>-->
+<!--</odoo>-->
+<odoo>
+    <record id="res_config_settings_view_form_inherit_winbooks" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.winbooks</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="101"/>
+        <!-- Inherit the main base settings form -->
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <!-- Insert AFTER the "send_invoices_followups" box -->
+            <xpath expr="//div[@id='send_invoices_followups']" position="after">
+                <div class="col-12 col-lg-6 o_setting_box" id="enable_winbooks_setting">
+                    <div class="o_setting_left_pane">
+                        <field name="enable_winbooks_integration"/>
+                    </div>
+                    <div class="o_setting_right_pane">
+                        <label for="enable_winbooks_integration"/>
+                        <div class="text-muted">
+                            Enable integration with <strong>WinBooks</strong> to send invoices automatically via email.
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>
