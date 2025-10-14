@@ -1,0 +1,15 @@
+<odoo>
+    <record id="res_config_settings_view_form_inherit_winbooks" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.winbooks</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="101"/>
+        <field name="inherit_id" ref="snailmail_account.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//setting[@id='send_invoices_followups']" position="after">
+                <setting id="enable_winbooks_setting" help="Enable integration with Email">
+                    <field name="enable_winbooks_integration"/>
+                </setting>
+            </xpath>
+        </field>
+    </record>
+</odoo>
