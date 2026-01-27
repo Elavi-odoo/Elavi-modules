@@ -1,0 +1,54 @@
+<odoo>
+    <record id="view_remote_invoice_sync_tree" model="ir.ui.view">
+        <field name="name">remote.invoice.sync.tree</field>
+        <field name="model">remote.invoice.sync</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="company_id"/>
+                <field name="url"/>
+                <field name="db_name"/>
+                <field name="last_sync"/>
+                <field name="status"/>
+                <field name="retry_count"/>
+                <field name="last_error"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_remote_invoice_sync_form" model="ir.ui.view">
+        <field name="name">remote.invoice.sync.form</field>
+        <field name="model">remote.invoice.sync</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="active"/>
+                        <field name="company_id"/>
+                        <field name="url"/>
+                        <field name="db_name"/>
+                        <field name="api_key"/>
+                    </group>
+                    <group>
+                        <field name="last_sync"/>
+                        <field name="status"/>
+                        <field name="retry_count"/>
+                        <field name="last_error"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <menuitem id="menu_remote_invoice_sync"
+              name="Remote Invoice Sync"
+              parent="account.menu_finance_configuration"
+              sequence="50"/>
+
+    <act_window id="action_remote_invoice_sync"
+                name="Remote Invoice Sync"
+                res_model="remote.invoice.sync"
+                view_mode="tree,form"
+                menu_id="menu_remote_invoice_sync"/>
+</odoo>
